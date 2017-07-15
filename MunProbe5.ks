@@ -13,7 +13,7 @@ SET AtmosphereEntryVelocity TO 2000.
 
 SET TouchDownVelocity TO 2.
 SET LandingAltitude TO 500.
-SET LandingTime TO 6. // initiate landing mode with 5 seconds to spare
+SET LandingTime TO 6. // initiate landing mode with this many seconds to spare
 
 // for non-atmosphere landings:
 SET DiveSurfaceVel TO 3. // Slow down to this velocity (relative to the surface plane) before making the final dive.
