@@ -8,10 +8,11 @@
 //
 // Parts you'll need:
 // - Reaction wheel or RCS thrusters
-// - Solid fuel boosters with enough DV to reach 80km
-// - Liquid fuel engine with enough fuel to reach orbit - and some left over for reentry
+// - Solid rocket boosters
+// - Liquid fuel engine with enough fuel to reach orbit after SRB's are spent - and some left over for reentry
 // - Batteries for the KOS unit and reaction wheel(s)
 // - Heat shield for reentry
+// - Parachutes to avoid lithobraking
 // 
 // ---- Start Config ----
 // This is a list of boosters that need to be staged after flameout
@@ -26,9 +27,6 @@ SET RetroFlipWait TO 10.
 
 // Set the amount of time to wait for boosters to drop away between stages
 SET BoosterWaitPeriod TO 2.
-
-// Drop the LF engine after boost(s) are complete? (probably always a good idea)
-SET DropLFengine TO true.
 
 // ---- End Config ----
 
@@ -48,7 +46,7 @@ SET TargetDirection TO ROUND(RANDOM() * 360).
 RUN GravityTurn_mk2.
 
 FOR boosterTag IN boosters {
-	SET booster TO SHIP:PARTSTAGGED(boosterTag)[0].
+	LOCAL booster IS SHIP:PARTSTAGGED(boosterTag)[0].
 	WAIT UNTIL booster:FLAMEOUT.
 	STAGE. // Separate
 	WAIT BoosterWaitPeriod.
@@ -68,9 +66,7 @@ WAIT UNTIL SHIP:PERIAPSIS <= 25000.
 
 LOCK THROTTLE TO 0.
 
-IF DropLFengine {
-	WAIT RetroFlipWait.
-	STAGE.
-}
+WAIT RetroFlipWait.
+STAGE. // Final stage: Separate the LF engine, arm parachutes, etc
 
 RUN HeatShieldReentry.
