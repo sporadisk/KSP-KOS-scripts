@@ -4,9 +4,9 @@
 // config:
 // Adjust these according to your aircraft's limits and capabilities.
 //SET targetAlt TO 2000. // Set this to 0 if you want the aircraft to maintain altitude from the moment you start the script.
-SET targetAlt TO 10000. // Set this to 0 if you want the aircraft to maintain altitude from the moment you start the script.
+SET targetAlt TO 8000. // Set this to 0 if you want the aircraft to maintain altitude from the moment you start the script.
 SET maxPitchAngleLevel TO 4.
-SET maxPitchAngleClimbing TO 10.
+SET maxPitchAngleClimbing TO 45.
 SET rollForce TO 0.005. // how hard the autopilot should roll
 SET yawForce TO 0.002.
 SET maxRollRate TO 3. // degrees per second
@@ -14,6 +14,8 @@ SET targetHeading TO 0.
 
 // end config.
 
+
+// Init
 SET targetAscent TO 0.
 SET targetRoll TO 0.
 SET currentHeading TO 0.
@@ -33,11 +35,7 @@ LOCK targetDir TO HEADING(targetHeading, 0).
 
 CLEARSCREEN.
 PRINT "HoppyPilot has control. Enable SAS to stop.".
-PRINT "Target heading:   " + targetHeading.
-PRINT "Relative heading".
 PRINT "Target altitude:  " + ROUND(targetAlt) + "m above sealevel.".
-PRINT "Current altitude:".
-PRINT "Mach:".
 PRINT "-----Debug:-----".
 
 SET AltMargin TO 20.
@@ -47,7 +45,7 @@ SET ascentMiss TO 0.
 SET pitchVal TO 0.
 SET Interval TO 0.1.
 SET lastTime TO TIME:SECONDS - 0.1.
-SET ascAngle TO ARCTAN(SHIP:VERTICALSPEED / SHIP:SURFACESPEED).
+SET ascAngle TO ARCTAN(SHIP:VERTICALSPEED / SHIP:GROUNDSPEED).
 SET rollBy TO 0.
 SET bankAngle TO 99999.
 set pitchAngle TO 99999.
@@ -92,7 +90,7 @@ UNTIL(0) // Loops forever. Stop the autopilot by using Ctrl+C or re-enabling SAS
 	SET lastTime TO TIME:SECONDS.
 	// Calculate the angle of ascent.
 	SET lastAscAngle TO ascAngle.
-	SET ascAngle TO ARCTAN(SHIP:VERTICALSPEED / SHIP:SURFACESPEED).
+	SET ascAngle TO ARCTAN(SHIP:VERTICALSPEED / SHIP:GROUNDSPEED).
 	SET ascDelta TO (ascAngle - lastAscAngle) / Interval.
 
 	SET machVel TO ROUND(SHIP:AIRSPEED / 343).
@@ -100,9 +98,12 @@ UNTIL(0) // Loops forever. Stop the autopilot by using Ctrl+C or re-enabling SAS
 	SET verticalAdjustment TO 1.
 
 	SET altDiff TO (targetAlt - SHIP:ALTITUDE).
+	SET altPortion TO (SHIP:ALTITUDE / targetAlt).
 	
-	IF(altDiff > 8000)
-		{ SET maxPitchAngle TO maxPitchAngleClimbing. }
+	IF(altPortion < 0.9) {
+		LOCAL altPneg IS 1 - altPortion.
+		SET maxPitchAngle TO (maxPitchAngleLevel * altPortion) + (maxPitchAngleClimbing * altPneg).
+	}
 	ELSE
 		{ SET maxPitchAngle TO maxPitchAngleLevel. }
 
@@ -201,7 +202,7 @@ UNTIL(0) // Loops forever. Stop the autopilot by using Ctrl+C or re-enabling SAS
 
 		IF(yawVal > 1)
 			SET yawVal TO 1.
-		ELSEIF(yawVal < -1)
+		ELSE IF(yawVal < -1)
 			SET yawVal TO -1.
 	}
 
@@ -227,7 +228,7 @@ UNTIL(0) // Loops forever. Stop the autopilot by using Ctrl+C or re-enabling SAS
 				SET counterRollVal TO counterRollVal + (rollForce).
 			}
 		}
-		ELSEIF(ABS(currentRollRate) < ABS(targetRollRate * 0.8))
+		ELSE IF(ABS(currentRollRate) < ABS(targetRollRate * 0.8))
 		{
 			// going too slow
 			SET templateRollVal TO templateRollVal + rollForce.
@@ -312,18 +313,18 @@ UNTIL(0) // Loops forever. Stop the autopilot by using Ctrl+C or re-enabling SAS
 			SET pitchVal TO (pitchVal + 0.02).
 	}
 
-	PRINT "Relative heading: " + relativeCompassHeading + "  " AT (0,2).
+	PRINT "Relative heading: " + relativeCompassHeading + "  " AT (0,3).
 	PRINT "Current altitude: " + ROUND(SHIP:ALTITUDE) + "m           " AT (0, 4).
-	PRINT "Mach:             " + machVel + "             " AT (0,5).
-	// debuig data here:
-	PRINT "Interval:   " + Interval + "                    " AT (0,14).
-	PRINT "pitchAngle: " + pitchAngle  + "                    " AT (0,19).
-	PRINT "rch_raw:    " + rch_raw  + "                    " AT (0,20).
-	PRINT "targetRoll: " + targetRoll  + "                    " AT (0,21).
-	PRINT "bankAngle:  " + bankAngle  + "                    " AT (0,22).
-	PRINT "bearing:    " + SHIP:BEARING  + "                    " AT (0,23).
-	PRINT "Interval:   " + Interval  + "                    " AT (0,24).
-	PRINT "rollRate:   " + currentRollRate  + "                    " AT (0,24).
+	PRINT "Mach:          " + machVel + "             " AT (0,5).
+	PRINT "maxPitchAngle: " + maxPitchAngle + "                   " AT (0,6).
+	PRINT "altPortion:    " + altPortion + "                    " AT (0,7).
+	PRINT "pitchAngle:    " + pitchAngle  + "                    " AT (0,8).
+	PRINT "rch_raw:       " + rch_raw  + "                    " AT (0,9).
+	PRINT "targetRoll:    " + targetRoll  + "                    " AT (0,10).
+	PRINT "bankAngle:     " + bankAngle  + "                    " AT (0,11).
+	PRINT "bearing:       " + SHIP:BEARING  + "                    " AT (0,12).
+	PRINT "Interval:      " + Interval  + "                    " AT (0,13).
+	PRINT "rollRate:      " + currentRollRate  + "                    " AT (0,14).
 
 	SET SHIP:CONTROL:ROLL TO rollVal.
 	SET SHIP:CONTROL:PITCH TO pitchVal.
