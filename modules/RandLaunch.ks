@@ -7,3 +7,4 @@ SET rvec TO V(randscal(),randscal(),randscal()).
 SET lookDir TO UP:VECTOR + (rvec * 0.2).
 SET newDir TO LOOKDIRUP(lookDir, UP:VECTOR).
 LOCK STEERING TO newDir.
+PRINT "Steering locked to: " + newDir.

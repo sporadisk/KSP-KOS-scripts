@@ -57,6 +57,17 @@ distance = (current_velocity*time) + (acceleration^time2)
 
 Trigger when that distance is sufficiently close.
 
+Resources list:
 
-
-solving for acceleration, attempt 3:
+LIST of 11 items:
+[0] = "ACTIVERESOURCE(FSCoolant,0,0)"
+[1] = "ACTIVERESOURCE(LiquidFuel,44.9442983238344,45)"
+[2] = "ACTIVERESOURCE(Oxidizer,54.9319201702953,55)"
+[3] = "ACTIVERESOURCE(SolidFuel,0,0)"
+[4] = "ACTIVERESOURCE(MonoPropellant,0,0)"
+[5] = "ACTIVERESOURCE(XenonGas,0,0)"
+[6] = "ACTIVERESOURCE(ElectricCharge,208.15405243436,215)"
+[7] = "ACTIVERESOURCE(IntakeAir,0,0)"
+[8] = "ACTIVERESOURCE(EVA Propellant,0,0)"
+[9] = "ACTIVERESOURCE(Ore,0,0)"
+[10] = "ACTIVERESOURCE(Ablator,0,0)"
