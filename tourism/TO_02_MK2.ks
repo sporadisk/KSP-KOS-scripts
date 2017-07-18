@@ -12,8 +12,8 @@ SET BoosterWaitPeriod TO 2.
 // ---- End Config ----
 
 // Copy scripts
-COPYPATH("0:/RandLaunch.ks", "1:").
-COPYPATH("0:/HeatShieldReentry.ks", "1:").
+COPYPATH("0:/Modules/RandLaunch.ks", "1:").
+COPYPATH("0:/Modules/HeatShieldReentry.ks", "1:").
 
 // Launch
 STAGE.
