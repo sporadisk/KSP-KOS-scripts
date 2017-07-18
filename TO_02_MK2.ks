@@ -12,8 +12,8 @@ SET BoosterWaitPeriod TO 2.
 // ---- End Config ----
 
 // Copy scripts
-COPY RandLaunch FROM 0.
-COPY HeatShieldReentry FROM 0.
+COPYPATH("0:/RandLaunch.ks", "1:").
+COPYPATH("0:/HeatShieldReentry.ks", "1:").
 
 // Launch
 STAGE.
@@ -25,6 +25,9 @@ WAIT UNTIL SHIP:VERTICALSPEED > 50.
 // Pick a random launch vector
 RUN RandLaunch.
 
+// Todo: Convert to use STAGE:RESOURCES and / or part:STAGE
+// https://ksp-kos.github.io/KOS/structures/vessels/aggregateresource.html
+// https://ksp-kos.github.io/KOS/structures/vessels/part.html
 FOR boosterTag IN boosters {
 	SET booster TO SHIP:PARTSTAGGED(boosterTag)[0].
 	WAIT UNTIL booster:FLAMEOUT.
