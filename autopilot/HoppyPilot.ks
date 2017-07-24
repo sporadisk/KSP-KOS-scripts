@@ -1,5 +1,6 @@
 // Autopilot that tries to maintain heading while keeping your aircraft at a certain altitude.
 // This script probably wont't work if you don't attach the KOS module behind the cockpit, in the same orientation as the cockpit.
+// fetch: COPYPATH("0:/autopilot/HoppyPilot.ks", "1:").
 
 // config:
 // Adjust these according to your aircraft's limits and capabilities.

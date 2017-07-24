@@ -1,6 +1,10 @@
 // Run examples:
 // RUNPATH("0:/debug/GetModuleHandles.ks", "radialDrogue", "ModuleParachute").
 // RUNPATH("0:/debug/GetModuleHandles.ks", "parachuteRadial", "ModuleParachute").
+// RUNPATH("0:/debug/GetModuleHandles.ks", "sasModule", "ModuleReactionWheel").
+// RUNPATH("0:/debug/GetModuleHandles.ks", "SCANsat.Scanner", "SCANsat").
+// RUNPATH("0:/debug/GetModuleHandles.ks", "RTShortDish2", "ModuleRTAntenna").
+// RUNPATH("0:/debug/GetModuleHandles.ks", "longAntenna", "ModuleRTAntenna").
 PARAMETER partName.
 PARAMETER moduleName.
 FOR P IN SHIP:PARTS {

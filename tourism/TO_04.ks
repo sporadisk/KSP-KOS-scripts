@@ -1,3 +1,4 @@
+// TODO: Upgrade this script to KOS 1.1.2
 // This script is made for tourism contracts where the contract objective
 // is to achieve orbit.
 // It takes off in a random direction, stages solid fuel boosters in the defined sequence,
