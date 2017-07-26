@@ -82,20 +82,25 @@ PRINT "Starting re-entry burn".
 LOCK THROTTLE TO 1.
 WAIT UNTIL SHIP:PERIAPSIS <= ReEntryAlt OR GetAllFuel() = 0.
 LOCK THROTTLE TO 0.
-WAIT BoosterWaitPeriod.
-STAGE.
-WAIT BoosterWaitPeriod.
 
 PRINT "Setting up scenic view until reentry".
 LOCK STEERING TO HEADING(TargetDirection,-45).
-WAIT UNTIL (SHIP:ALTITUDE < 70000 AND SHIP:VERTICALSPEED < 0).
+WAIT UNTIL (SHIP:ALTITUDE < 60000 AND SHIP:VERTICALSPEED < 0).
 
 PRINT "Re-entry initiating".
-LOCK STEERING TO SHIP:RETROGRADE.
-WAIT FlipWait.
 LOCK STEERING TO SHIP:SRFRETROGRADE.
-// 630m/s: safe for drag chutes
-WAIT UNTIL SHIP:VELOCITY:SURFACE:MAG < 630.
+WAIT FlipWait.
+
+LOCK THROTTLE TO 1.
+WAIT UNTIL GetAllFuel() = 0.
+LOCK STEERING TO SHIP:UP.
+WAIT FlipWait / 2.
+STAGE. // Separate engine.
+WAIT BoosterWaitPeriod.
+LOCK STEERING TO SHIP:SRFRETROGRADE.
+
+// 530m/s: safe for drag chutes?
+WAIT UNTIL SHIP:VELOCITY:SURFACE:MAG < 530.
 STAGE. // Deploy drag chutes
 
 WAIT UNTIL ALT:RADAR < ChuteAlt.
