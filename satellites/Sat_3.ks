@@ -1,5 +1,7 @@
 // Run examples:
 // RUNPATH("0:/satellites/Sat_3.ks", 90, 2, 90000, 490000, 25, 2).
+// RUNPATH("0:/satellites/Sat_3.ks", 90, 1, 73000, 210000, 25, 2).
+// RUNPATH("0:/satellites/Sat_3.ks", 270, 1, 75000, 75000, 25, 2).
 
 // TargetDirection (0-359): The compass direction to turn towards after launch.
 PARAMETER TargetDirection.
@@ -35,6 +37,7 @@ LOCK THROTTLE TO 1.
 // Expend solid fuel stages in sequence
 UNTIL solidFuel:CAPACITY = 0 { // run until we reach a stage whith no solid fuel boosters.
 	PRINT "Next booster stage initiated".
+	PRINT "Capacity: " + solidFuel:CAPACITY.
 	WAIT UNTIL solidFuel:AMOUNT < 0.0053. // wait until the current boosters are dry(ish)
 	PRINT "Solid fuel empty".
 
@@ -64,6 +67,15 @@ LOCK THROTTLE TO 0.
 PRINT "Waiting for apoapsis".
 // Wait for apoapsis
 LOCK STEERING TO HEADING(TargetDirection,0).
+
+IF(ETA:APOAPSIS > 60) {
+	// Or don't.
+	WAIT UNTIL SHIP:ALTITUDE > 70000.
+	WAIT BoosterWaitPeriod * 2.
+	SET exitPoint TO ETA:APOAPSIS - (CircBurnBuffer + 15).
+	kuniverse:timewarp:warpto(time:seconds + exitPoint).
+}
+
 WAIT UNTIL ETA:APOAPSIS <= CircBurnBuffer.
 
 PRINT "Starting circularization burn".
@@ -84,6 +96,12 @@ IF(SHIP:APOAPSIS < TargetOrbit) {
 PRINT "Target apoapsis achieved!".
 
 IF(SHIP:PERIAPSIS < TargetOrbit) {
+	IF(ETA:APOAPSIS > 60) {
+		WAIT BoosterWaitPeriod * 2.
+		SET exitPoint TO ETA:APOAPSIS - (CircBurnBuffer + 15).
+		kuniverse:timewarp:warpto(time:seconds + exitPoint).
+	}
+
 	WAIT UNTIL ETA:APOAPSIS <= CircBurnBuffer.
 	LOCK THROTTLE TO 1.
 	WAIT UNTIL SHIP:PERIAPSIS >= TargetOrbit.
