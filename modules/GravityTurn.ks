@@ -9,7 +9,7 @@ function GravityTurn {
 	PARAMETER Factor IS 1.
 
 	// Factor examples: These are angles that the different factors will yield
-	// at certain percentages of the target altitude.
+	// at certain percentages of the target apoapsis.
 	//       0%   10%   20%   30%   40%   50%   60%   70%   80%   90%   100%
 	// 1   - 90   89    86    82    76    68    58    46    32    17    0
 	// 1.5 - 90   86    79    72    63    54    44    34    23    12    0
