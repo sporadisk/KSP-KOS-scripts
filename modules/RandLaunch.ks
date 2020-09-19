@@ -1,3 +1,4 @@
+// works on KOS 1.2.0.0
 // Chooses a random launch vector.
 local function randscal {
 	return (RANDOM() * 2) - 1.

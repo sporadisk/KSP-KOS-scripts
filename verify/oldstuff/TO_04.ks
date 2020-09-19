@@ -32,7 +32,7 @@ SET BoosterWaitPeriod TO 2.
 // ---- End Config ----
 
 // Copy scripts
-COPY GravityTurn_mk2 FROM 0.
+COPY GravityTurn FROM 0.
 COPY HeatShieldReentry FROM 0.
 
 // Launch
@@ -44,7 +44,7 @@ WAIT UNTIL SHIP:VERTICALSPEED > 50.
 
 // Start gravity turn
 SET TargetDirection TO ROUND(RANDOM() * 360).
-RUN GravityTurn_mk2.
+RUN GravityTurn.
 
 FOR boosterTag IN boosters {
 	LOCAL booster IS SHIP:PARTSTAGGED(boosterTag)[0].

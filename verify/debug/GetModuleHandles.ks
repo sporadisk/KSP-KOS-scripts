@@ -5,9 +5,12 @@
 // RUNPATH("0:/debug/GetModuleHandles.ks", "SCANsat.Scanner", "SCANsat").
 // RUNPATH("0:/debug/GetModuleHandles.ks", "RTShortDish2", "ModuleRTAntenna").
 // RUNPATH("0:/debug/GetModuleHandles.ks", "longAntenna", "ModuleRTAntenna").
+// RUNPATH("0:/debug/GetModuleHandles.ks", "scansat-multi-abi-1", "SCANsat").
 PARAMETER partName.
 PARAMETER moduleName.
-FOR P IN SHIP:PARTS {
+
+LIST Parts IN allShipParts. // get a list of all ship parts
+FOR P IN allShipParts {
 	IF(P:NAME = partName) {
 		PRINT "---------------".
 		PRINT "Part found!".

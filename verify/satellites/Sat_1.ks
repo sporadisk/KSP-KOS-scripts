@@ -12,7 +12,7 @@ PARAMETER CircBurnBuffer IS 10.
 // GravityTurnRatio: How slowly should the craft turn towards the horizon? (less=faster)
 PARAMETER GravityTurnRatio IS 2.
 
-RUNPATH("0:/modules/GravityTurn_mk2.ks").
+RUNPATH("0:/modules/GravityTurn.ks").
 RUNPATH("0:/modules/GetSolidFuel.ks"). // loads the GetSolidFuel-function
 RUNPATH("0:/modules/GetPartModules.ks"). // loads the GetPartModules-function
 RUNPATH("0:/modules/GetAllFuel.ks"). // loads the GetAllFuel-function

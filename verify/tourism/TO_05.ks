@@ -15,7 +15,7 @@ PARAMETER ReEntryAlt IS 27000.
 // ChuteAlt: The altitude at which to deploy the chutes
 PARAMETER ChuteAlt IS 500.
 
-RUNPATH("0:/modules/GravityTurn_mk2.ks"). // loads the GravityTurn-function
+RUNPATH("0:/modules/GravityTurn.ks"). // loads the GravityTurn-function
 RUNPATH("0:/modules/GetPartModules.ks"). // loads the GetPartModules-function
 RUNPATH("0:/modules/RunPartModuleEvent.ks"). // loads the RunPartModuleEvent-function
 RUNPATH("0:/modules/GetSolidFuel.ks"). // loads the GetSolidFuel-function
